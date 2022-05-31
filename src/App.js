@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { Suspense } from "react";
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import { Play, Welcome, Test } from "pages";
+import { PLAY, WELCOME } from "constants/routes";
+import { Loader } from "components";
+import PlayerProvider from "context/player";
+
+import "./App.css";
+import "./styles/global.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="bg-primary">
+      <PlayerProvider>
+        <Router>
+          <Suspense fallback={<Loader />}>
+            <Switch>
+              <Route exact path={WELCOME} component={Welcome} />
+              <Route exact path={PLAY} component={Play} />
+
+              <Route exact path="/test" component={Test} />
+            </Switch>
+          </Suspense>
+        </Router>
+      </PlayerProvider>
     </div>
   );
 }
