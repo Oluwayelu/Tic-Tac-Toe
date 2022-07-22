@@ -1,14 +1,15 @@
-import Particles from "react-tsparticles";
-import { PLAY } from "constants/routes";
 import { FaPlay, FaUser, FaUsers } from "react-icons/fa";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { Modal } from "components";
-import { PlayerContext } from "context/player";
+import { Modal, Room } from "components";
+
+import { GameContext } from "context";
 
 const WelcomePage = () => {
-  const { players, setPlayers } = useContext(PlayerContext);
+  const { mode, setMode } = useContext(GameContext);
   const [showModal, setShowModal] = useState(false);
+  const [joinRoomModal, setJoinRoomModal] = useState(false);
+
   // function transOver(e) {
   //   e.target.style.transform = "rotate(245deg)";
   // }
@@ -28,9 +29,6 @@ const WelcomePage = () => {
 
   return (
     <div className="relative w-full h-screen flex flex-col justify-center items-center">
-      <h1 className="absolute top-20 font-mono text-4xl lg:text-6xl">
-        Tic Tac Toe
-      </h1>
       <p
         onClick={toggleModal}
         htmlFor="my-modal"
@@ -38,21 +36,44 @@ const WelcomePage = () => {
       >
         How to play?
       </p>
-      <Modal show={showModal} close={toggleModal} />
+      <Modal id="my-modal" show={showModal} close={toggleModal}>
+        <h1 className="text-2xl md:text-4xl text-success font-medium cursor-pointer">
+          How to Play?
+        </h1>
+
+        <p className="">- First: You sh</p>
+      </Modal>
       <div className="absolute w-40 h-40 border-2 border-white rounded-lg animate-pendulum"></div>
       <div className="absolute w-40 h-40 border-2 border-white rounded-lg animate-anti-pendulum"></div>
-      <Link
-        to="/play"
-        className="absolute w-40 h-40 flex justify-center items-center bg-success rounded-lg"
-      >
-        <FaPlay size={50} />
-      </Link>
+      <div className="absolute w-40 h-40 flex justify-center items-center bg-success rounded-lg cursor-pointer">
+        {mode === "vsComputer" && (
+          <Link to="/play">
+            <FaPlay size={50} />
+          </Link>
+        )}
+
+        {mode === "multi-player" && (
+          <div>
+            <div
+              onClick={() => setJoinRoomModal(!joinRoomModal)}
+              htmlFor="join-room"
+            >
+              <FaPlay size={50} />
+            </div>
+            <Room
+              id="join-room"
+              show={joinRoomModal}
+              close={() => setJoinRoomModal(!joinRoomModal)}
+            />
+          </div>
+        )}
+      </div>
 
       <div className="absolute bottom-20 w-full flex justify-center items-center space-x-10">
         <div
-          onClick={() => setPlayers("single-player")}
+          onClick={() => setMode("vsComputer")}
           className={`p-5 rounded-full border-2 cursor-pointer ${
-            players === "single-player"
+            mode === "vsComputer"
               ? "border-success scale-125"
               : "border-white scale-90"
           } transition-all duration-300 ease-in-out `}
@@ -60,16 +81,16 @@ const WelcomePage = () => {
           <FaUser
             size={30}
             className={`${
-              players === "single-player"
+              mode === "vsComputer"
                 ? "text-success scale-125"
                 : "text-white scale-90"
             } transition-all duration-300 ease-in-out `}
           />
         </div>
         <div
-          onClick={() => setPlayers("multi-player")}
+          onClick={() => setMode("multi-player")}
           className={`p-5 rounded-full border-2 cursor-pointer ${
-            players === "multi-player"
+            mode === "multi-player"
               ? "border-success scale-110"
               : "border-white scale-90"
           } transition-all duration-300 ease-in-out`}
@@ -77,7 +98,7 @@ const WelcomePage = () => {
           <FaUsers
             size={30}
             className={`${
-              players === "multi-player"
+              mode === "multi-player"
                 ? "text-success scale-125"
                 : "text-white scale-90"
             } transition-all duration-300 ease-in-out `}

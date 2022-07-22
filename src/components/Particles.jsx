@@ -1,5 +1,5 @@
-import React from 'react'
-import Particles from "react-tsparticles"
+import React from "react";
+import Particles from "react-tsparticles";
 
 const Particle = () => {
   return (
@@ -10,7 +10,7 @@ const Particle = () => {
           zIndex: 0,
         },
         background: {
-          color: "#000",
+          color: "inherit",
         },
         fpsLimit: 60,
         interactivity: {
@@ -22,14 +22,14 @@ const Particle = () => {
               mode: "bubble",
               parallax: { enable: false, force: 2, smooth: 10 },
             },
-            resize: true,
+            // resize: true,
           },
           modes: {
             bubble: {
               distance: 400,
               duration: 0.3,
-              opacity: 1,
-              size: 4,
+              opacity: 0.7,
+              size: 2,
               speed: 3,
             },
             grab: { distance: 400, line_linked: { opacity: 0.5 } },
@@ -45,25 +45,25 @@ const Particle = () => {
             distance: 500,
             enable: false,
             opacity: 0.4,
-            width: 2,
+            width: 1,
           },
           move: {
             attract: { enable: false, rotateX: 600, rotateY: 1200 },
             direction: "bottom",
             enable: true,
             outMode: "out",
-            random: false,
+            random: true,
             size: true,
-            speed: 4,
+            speed: 2,
             straight: false,
           },
-          number: { density: { enable: true, area: 800 }, value: 400 },
+          number: { density: { enable: true, area: 800 }, value: 200 },
           opacity: {
             random: true,
             value: 0.5,
           },
           shape: {
-            type: "circle",
+            type: "square",
           },
           size: {
             random: true,
@@ -74,6 +74,6 @@ const Particle = () => {
       }}
     />
   );
-}
+};
 
-export default Particle
+export default Particle;

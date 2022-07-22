@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Board, Square } from "components";
 import { usePlayer } from "hooks";
 import { defaultSquares } from "utils";
 import checkLines from "services/checkLines";
-import { Link } from "react-router-dom";
 
 const PlayPage = () => {
   const [squares, setSquares] = useState(defaultSquares());
@@ -39,14 +38,9 @@ const PlayPage = () => {
     setSquares([...defaultSquares()]);
   };
 
+
   return (
     <div className="relative font-roboto h-screen flex flex-col justify-center items-center space-y-5">
-      <nav className="absolute top-0 px-5 lg:px-10 py-5 w-full flex items-center justify-center">
-        <Link to="/">
-          <h1 className="text-2xl lg:text-4xl font-mono">Tic Tac Toe</h1>
-        </Link>
-      </nav>
-
       {player1Won && (
         <div className="px-5 py-2 bg-success text-2xl rounded-lg">
           Player 1 WON!
